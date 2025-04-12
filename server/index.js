@@ -1,4 +1,4 @@
-const PORT = 8080;
+import 'dotenv/config';
 
 import express from "express";
 import cors from "cors";
@@ -54,6 +54,6 @@ routes.forEach((route) => {
     }
 })
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server listening on port ${process.env.PORT}`);
 });
