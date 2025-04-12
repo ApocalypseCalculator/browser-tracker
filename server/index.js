@@ -52,6 +52,10 @@ routes.forEach((route) => {
             }
         });
     }
+});
+
+app.use('/', (req, res) => {
+    res.status(403).json({ status: 403, error: 'access not permitted' });
 })
 
 app.listen(process.env.PORT, () => {
