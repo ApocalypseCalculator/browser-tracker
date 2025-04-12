@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model HistoryItem {
+  id            Int
+  lastVisitTime DateTime
+  updatedAt     DateTime @updatedAt
+  title         String
+  typedCount    Int
+  url           String
+  visitCount    Int
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@id([id, userId])
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  type      String // install, startup, uninstall, delete
+  data      String?
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  source       String?
+  name         String?
+  runtimeId    String        @unique
+  historyItems HistoryItem[]
+  events       Event[]
+}
