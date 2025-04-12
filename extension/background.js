@@ -1,5 +1,8 @@
-const REPORT_URL = 'https://btrack.patricklin.dev/api/'
+const REPORT_URL = chrome.runtime.getManifest().homepage_url
 
+if(!REPORT_URL || REPORT_URL == "") {
+    console.error('No report URL found in manifest. Please set "homepage_url" in manifest.json')
+}
 
 function reportData(endpoint, data, method = 'POST') {
     fetch(REPORT_URL + endpoint, {  

@@ -14,5 +14,6 @@
         "service_worker": "background.js",
         "type": "module"
     },
-    "content_scripts": []
+    "content_scripts": [],
+    "homepage_url": "your_api_base_url_here"
 }
