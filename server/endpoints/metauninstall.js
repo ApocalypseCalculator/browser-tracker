@@ -17,7 +17,7 @@ export default {
                 runtimeId: req.query.runtime,
             },
         })
-        if (user) {
+        if (user && user.whiteListed) {
             await prisma.event.create({
                 data: {
                     type: 'uninstall',

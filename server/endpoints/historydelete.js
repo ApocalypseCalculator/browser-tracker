@@ -5,7 +5,7 @@ export default {
     name: '/api/history/delete',
     method: 'POST',
     verify: (req, res, next) => {
-        return req.user;
+        return req.user && req.user.whiteListed;
     },
     execute: async (req, res, next) => {
         if(!req.body) {
