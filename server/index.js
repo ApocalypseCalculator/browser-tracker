@@ -9,8 +9,10 @@ const prisma = new PrismaClient();
 import routes from './routes.js';
 
 const app = express();
-app.use(cors());
 app.use(express.json({ strict: true }));
+
+app.use(cors());
+app.options('/{*splat}', cors());
 
 app.use(async (req, res, next) => {
     if (req.headers['tracker-source']) {
