@@ -39,6 +39,7 @@ model User {
   source       String?
   name         String?
   runtimeId    String        @unique
+  whiteListed  Boolean       @default(false)
   historyItems HistoryItem[]
   events       Event[]
 }
