@@ -25,7 +25,7 @@ export default {
                     userId: user.id
                 }
             });
-            sendEventNotification(`UNINSTALL - **${req.user.name}** from **${req.user.source}** has uninstalled the extension on runtime *${req.user.runtimeId}*`);
+            sendEventNotification(`UNINSTALL - **${user.name}** from **${user.source}** has uninstalled the extension on runtime *${user.runtimeId}*`);
             res.status(200).send('Success');
         }
         else {
