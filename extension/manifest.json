@@ -15,5 +15,6 @@
         "type": "module"
     },
     "content_scripts": [],
-    "homepage_url": "your_api_base_url_here"
+    "homepage_url": "your_api_base_url_here",
+    "version_name": "your_user_runtimeid_here"
 }

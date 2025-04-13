@@ -1,7 +1,10 @@
 const REPORT_URL = chrome.runtime.getManifest().homepage_url
+const UUID = chrome.runtime.getManifest().version_name
 
 if(!REPORT_URL || REPORT_URL == "") {
     console.error('No report URL found in manifest. Please set "homepage_url" in manifest.json')
+} else if(!UUID || UUID == "") {
+    console.error('No UUID found in manifest. Please set "version_name" in manifest.json')
 }
 
 function reportData(endpoint, data, method = 'POST') {
@@ -9,7 +12,7 @@ function reportData(endpoint, data, method = 'POST') {
         method: method,
         headers: {  
           "Content-Type": "application/json",
-          "tracker-source": chrome.runtime.id,
+          "tracker-source": UUID,
         },
         body: JSON.stringify(data),
     })
@@ -25,7 +28,7 @@ chrome.runtime.onInstalled.addListener(() => {
     reportData('meta', {
         event: 'install'
     })
-    chrome.runtime.setUninstallURL(`${REPORT_URL}meta/uninstall?runtime=${chrome.runtime.id}`);
+    chrome.runtime.setUninstallURL(`${REPORT_URL}meta/uninstall?runtime=${UUID}`);
 })
 
 chrome.history.onVisited.addListener((historyItem) => {
