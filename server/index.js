@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from "./generated/prisma/index.js";
+import { sendErrorNotification } from './notifs.js';
 const prisma = new PrismaClient();
 
 import routes from './routes.js';
@@ -43,7 +44,7 @@ routes.forEach((route) => {
         app[route.method.toLowerCase()](route.name, (req, res, next) => {
             if (route.verify(req, res, next)) {
                 route.execute(req, res, next).catch((err) => {
-                    console.error(err);
+                    sendErrorNotification(err, req.user);
                     res.status(500).json({ status: 500, error: 'Internal server error' });
                 });
             }

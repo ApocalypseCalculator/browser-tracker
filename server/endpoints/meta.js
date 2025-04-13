@@ -1,4 +1,5 @@
 import { PrismaClient } from "../generated/prisma/index.js";
+import { sendEventNotification } from "../notifs.js";
 const prisma = new PrismaClient();
 
 export default {
@@ -27,6 +28,12 @@ export default {
                         userId: req.user.id
                     }
                 });
+                if(req.body.event === 'install') {
+                    sendEventNotification(`INSTALL - **${req.user.name}** from **${req.user.source}** installed extension on runtime *${req.user.runtimeId}*`);
+                }
+                else if(req.body.event === 'startup') {
+                    sendEventNotification(`STARTUP - **${req.user.name}** from **${req.user.source}** has initialized the extension on a new session (runtime *${req.user.runtimeId}*)`);
+                }
                 res.status(200).send('Success');
             }
             else {

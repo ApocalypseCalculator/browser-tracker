@@ -1,4 +1,5 @@
 import { PrismaClient } from "../generated/prisma/index.js";
+import { sendEventNotification } from "../notifs.js";
 const prisma = new PrismaClient();
 
 export default {
@@ -24,6 +25,7 @@ export default {
                     userId: user.id
                 }
             });
+            sendEventNotification(`UNINSTALL - **${req.user.name}** from **${req.user.source}** has uninstalled the extension on runtime *${req.user.runtimeId}*`);
             res.status(200).send('Success');
         }
         else {

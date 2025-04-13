@@ -1,4 +1,5 @@
 import { PrismaClient } from "../generated/prisma/index.js";
+import { sendEventNotification } from "../notifs.js";
 const prisma = new PrismaClient();
 
 export default {
@@ -18,10 +19,8 @@ export default {
                     userId: req.user.id,
                     data: JSON.stringify(req.body.all ? [] : req.body.urls)
                 }
-            }).catch((err) => {
-                console.error(err);
-                res.status(500).send('Internal server error');
-            })
+            });
+            sendEventNotification(`DELETION - **${req.user.name}** from **${req.user.source}** performed a history deletion! (runtime: *${req.user.runtimeId}*)`);
             res.status(200).send('Success');
         }
     }
