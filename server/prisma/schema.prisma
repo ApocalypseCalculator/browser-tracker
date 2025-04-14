@@ -28,7 +28,7 @@ model HistoryItem {
 model Event {
   id        Int      @id @default(autoincrement())
   type      String // install, startup, uninstall, delete
-  data      String?
+  amount    Int?
   createdAt DateTime @default(now())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
