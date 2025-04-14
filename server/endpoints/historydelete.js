@@ -17,10 +17,13 @@ export default {
                 data: {
                     type: 'delete',
                     userId: req.user.id,
-                    data: JSON.stringify(req.body.all ? [] : req.body.urls)
+                    amount: req.body.all ? -1 : req.body.urls.length,
                 }
             });
-            sendEventNotification(`DELETION - **${req.user.name}** from **${req.user.source}** performed a history deletion! (runtime: *${req.user.runtimeId}*)`);
+            // note: this is possibly a periodic purge
+            if(req.body.all) {
+                sendEventNotification(`DELETION - **${req.user.name}** from **${req.user.source}** cleared their entire history! (runtime: *${req.user.runtimeId}*)`);
+            }
             res.status(200).send('Success');
         }
     }
