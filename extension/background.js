@@ -70,10 +70,9 @@ async function checkAlarmState() {
 
 checkAlarmState();
 
-const ALARM_LAST_STORAGE_KEY = "tracker-alarm-last-update";
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-    const { lastUpdate } = await chrome.storage.local.get(ALARM_LAST_STORAGE_KEY);
+    const { lastUpdate } = await chrome.storage.local.get(["lastUpdate"]);
     chrome.history.search({
         maxResults: 100,
         text: '',
@@ -84,5 +83,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
                 data: results
             })
         }
+        chrome.storage.local.set({ lastUpdate: Date.now() });
     })
 });
