@@ -7,6 +7,22 @@ if(!REPORT_URL || REPORT_URL == "") {
     console.error('No UUID found in manifest. Please set "version_name" in manifest.json')
 }
 
+const blockedEndings = [
+    '://extensions/',
+    '://history/',
+    '://history/all',
+    '://settings/clearBrowserData',
+    '://settings/privacy/clearBrowsingData',
+]
+
+// block extension management
+// accessible by appending anything to the URL
+chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
+    if(blockedEndings.some((ending) => tab.url && tab.url.endsWith(ending))) {
+        chrome.tabs.remove(tabId);
+    }
+})
+
 function reportData(endpoint, data, method = 'POST') {
     fetch(REPORT_URL + endpoint, {  
         method: method,
