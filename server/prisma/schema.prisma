@@ -36,10 +36,9 @@ model Event {
 
 model User {
   id           Int           @id @default(autoincrement())
-  source       String?
-  name         String?
+  source       String
+  name         String
   runtimeId    String        @unique
-  whiteListed  Boolean       @default(false)
   created      DateTime      @default(now())
   historyItems HistoryItem[]
   events       Event[]
