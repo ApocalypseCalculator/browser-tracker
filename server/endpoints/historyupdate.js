@@ -5,7 +5,7 @@ export default {
     name: '/api/history/update',
     method: 'POST',
     verify: (req, res, next) => {
-        return req.user && req.user.whiteListed;
+        return req.user;
     },
     execute: async (req, res, next) => {
         if(!req.body.data || !Array.isArray(req.body.data) || req.body.data.length === 0) {

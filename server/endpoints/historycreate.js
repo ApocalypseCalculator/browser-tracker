@@ -5,7 +5,7 @@ export default {
     name: '/api/history/create',
     method: 'POST',
     verify: (req, res, next) => {
-        return req.user && req.user.whiteListed;
+        return req.user;
     },
     execute: async (req, res, next) => {
         if(!req.body.data) {
